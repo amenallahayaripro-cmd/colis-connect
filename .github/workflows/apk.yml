@@ -1,5 +1,7 @@
 name: Build APK
-on: [push]
+on:
+  push:
+    branches: [ main ]
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -9,9 +11,14 @@ jobs:
         with:
           flutter-version: \'3.22.0\'
           channel: \'stable\'
-      - run: |
+      - name: Create project if needed
+        run: |
           if [ ! -d "android" ]; then
+            cp lib/main.dart /tmp/main.dart
+            cp pubspec.yaml /tmp/pubspec.yaml
             flutter create . --project-name colis_connect
+            cp /tmp/main.dart lib/main.dart
+            cp /tmp/pubspec.yaml pubspec.yaml
           fi
       - run: flutter pub get
       - run: flutter build apk --debug
