@@ -9,16 +9,16 @@ jobs:
       - uses: actions/checkout@v4
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: \'3.22.0\'
-          channel: \'stable\'
-      - name: Create project if needed
+          flutter-version: "3.22.0"
+          channel: "stable"
+      - name: Create Android project if missing
         run: |
           if [ ! -d "android" ]; then
-            cp lib/main.dart /tmp/main.dart
-            cp pubspec.yaml /tmp/pubspec.yaml
-            flutter create . --project-name colis_connect
-            cp /tmp/main.dart lib/main.dart
-            cp /tmp/pubspec.yaml pubspec.yaml
+            cp lib/main.dart /tmp/main.dart.bak
+            cp pubspec.yaml /tmp/pubspec.yaml.bak
+            flutter create . --project-name colis_connect --platforms android
+            cp /tmp/main.dart.bak lib/main.dart
+            cp /tmp/pubspec.yaml.bak pubspec.yaml
           fi
       - run: flutter pub get
       - run: flutter build apk --debug
