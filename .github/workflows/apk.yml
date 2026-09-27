@@ -10,11 +10,8 @@ jobs:
           flutter-version: \'3.22.0\'
           channel: \'stable\'
       - run: |
-          if [ ! -f "pubspec.yaml" ]; then
-            flutter create colis_connect --project-name colis_connect
-            mv colis_connect/* . 2>/dev/null || true
-            mv colis_connect/.* . 2>/dev/null || true
-            rm -rf colis_connect
+          if [ ! -d "android" ]; then
+            flutter create . --project-name colis_connect
           fi
       - run: flutter pub get
       - run: flutter build apk --debug
